@@ -175,6 +175,7 @@ int main(int argc, char **argv)
    S32 i;
 
    setbuf(stdout,NULL);
+
    SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
 
    if ((argc < 2) || (strchr(argv[1],'?') != NULL))
@@ -337,7 +338,7 @@ int main(int argc, char **argv)
 
          if (ch == 27)
             {
-            global_timer.log_printf("Manual shutdown requested\n");
+            global_timer.log_printf("Manual shutdown requested (ESC)\n");
             break;
             }
 
