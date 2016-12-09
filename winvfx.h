@@ -19,7 +19,7 @@
 //*  8301 Elander Drive                                                      *
 //*  Austin, TX 78750                                                        *
 //*                                                                          *
-//*  jmiles@pop.net                                                          *
+//*  john@miles.io                                                           *
 //*  (512) 345-2642                                                          *
 //*                                                                          *
 //****************************************************************************
@@ -783,4 +783,3 @@ DXDEC void WINAPI VFX_illuminate_polygon    (PANE           *pane,
 #endif
 
 #endif
-

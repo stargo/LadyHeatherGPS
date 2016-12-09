@@ -2,7 +2,7 @@
 //
 // TIMEUTIL: Time/date-related utility classes
 //
-// jmiles@pop.net 18-Mar-10
+// john@miles.io 18-Mar-10
 //
 // *****************************************************************************
 

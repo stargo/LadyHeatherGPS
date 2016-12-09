@@ -99,31 +99,32 @@ font-family:arial; font-size:14; font-style:italic; font-weight:bold; color:maro
 <br>
 <i><h2>Lady Heather's Disciplined Oscillator Control Program</h2></i>
 <P>
-This program monitors and controls the operation of various GPS-disciplined frequency standards.  Currently-supported models include the Trimble Thunderbolt, Thunderbolt-E, 
-Nortel NTGS50AA series, Resolution-T, and Resolution SMT receivers.  
-<P>
+This program monitors and controls the operation of various GPS-disciplined frequency standards.
 <br>
-<a href="http://www.ke5fx.com/heather/setup.exe" class="lhbutton">Download <i>Lady Heather</i> V3.10 of June 18, 2012 (Windows setup program)</a>
 <br>
-<P>
-<a href="http://www.ke5fx.com/heather/beta.exe" class="lhbetabutton">Download <i>Lady Heather</i> V4.00 (beta) of April 27, 2016 (Windows setup program)</a>
+<a href="http://www.ke5fx.com/heather/setup.exe" class="lhbutton">Download <i>Lady Heather</i> V5.00 (Windows)</a>
 <br>
-<P>
-<a href="http://www.ke5fx.com/heather/heather.zip" class="lhzipbutton">Download <i>Lady Heather</i> V4.00 (beta) of April 27, 2016 (.zip archive with all source files)</a>
 <br>
-<P>
+<a href="http://www.ke5fx.com/heather/setup310a.exe">Download previous release of <i>Lady Heather</i></a>
+<br>
+(V3.10 of June 18, 2012, Windows setup program
+<br>
+<br>
 <a href="http://www.ke5fx.com/heather/readme.txt">Linux build instructions (readme.txt) for beta version</a>
 <br>
+<P>
+<a href="http://www.ke5fx.com/heather/heatherx11.zip">Zipfile for Linux and other OSes; see readme.txt above</a>
 <br>
-<P>
-Note: After running the Windows setup program, the C++ sources and makefile will be installed in the same directory as the executable.
-<P>
 <br>
 Copyright (C) 2008-2016 Mark S. Sims - all rights reserved
 <br>
 Permission granted for free noncommercial use and distribution
 <br>
-Win32 version and TCP/IP server by John Miles, KE5FX (<a href="mailto:jmiles@pop.net?subject=Lady Heather">jmiles@pop.net</a>)
+<br>
+Win32 version and TCP/IP server by John Miles, KE5FX (<a href="mailto:john@miles.io?subject=Lady Heather">john@miles.io</a>)
+<br>
+C++ sources and makefile will be installed in the same directory as the Windows executable.
+<br>
 <br>
 Allan deviation code adapted from Tom Van Baak's <a href="http://www.leapsecond.com/tools/adev1.htm">adev1.c</a>
 <br>
@@ -131,211 +132,250 @@ Temperature and oscillator control algorithms by Warren Sarkinson
 <br>
 Easter and moon-phase code from <a href="http://www.voidware.com" target=_blank>voidware.com</a>
 <br>
-<P>
-Users of GPSDOs other than the Thunderbolt models should review the comment header in HEATHER.CPP for specific notes. 
+See the .PDF document linked below for further credits.
 <br>
-<br clear=all>
+<P>
+<br>
+<b><i>Some brief release notes. . . </i></b>
+<P>
+Heather now has some proper user documentation.  Check the <a href="http://www.ke5fx.com/heather/heather.pdf">heather.pdf</a> file and/or the comments in the first 3500+ lines of the heather.cpp file.  Heather can be compiled for Linux (including the Raspberry Pi) and macOS.  See the Linux files linked above for compilation instructions.
+<P>
+There are MANY new features in Heather V5, including support for numerous receiver types.  Heather will attempt to autodetect the receiver type at startup time, but you can bypass autodetection and specify an explicit receiver type using the new <b>/rx...</b> command line options as noted in the documentation.  
+<P>
+Note that some receiver types cannot be auto-detected at all, while others that transmit NMEA messages by default can be addressed in their native binary language using the <b>/rx</b> commands.  Native binary mode provides more data and allows more control over the receiver configuration and settings.
+<P>
+Currently-supported receivers include:
+<br>
+<ul>
+<li>Trimble Thunderbolt and Thunderbolt-E
+<li>Acron Zeit WWVB receiver
+<li>UCCM - Trimble / Symmetricom GPSDOs
+<li>DATUM STARLOC II GPSDO
+<li>NEC GPSDO (STAR-4 compatible)
+<li>GPSD interface
+<li>Jupiter-T (aka Zodiac)
+<li>Lucent KS24361 REF0/Z3811A (19200:8:N:1)
+<li>Motorola binary format
+<li>Generic NMEA receiver
+<li>Trimble Resolution T family with odd parity
+<li>Sirf binary
+<li>Generic Trimble TSIP binary
+<li>Ublox UBX binary
+<li>Venus mixed binary / NMEA
+<li>Nortel SCPI-compatible GPSDOs (NTWB, NTPX, etc.)
+<li>Z3801A and compatible SCPI GPSDOs
+<li>HP 5xxxx-style SCPI
+<li>Oscilloquartz STAR-4 (via the management interface)
+<li>NVS binary
+<li>PC system clock (no receiver)
+</ul>
+<P>
+After installing Heather, you should edit the heather.cfg file (or the PROPERTIES setting for the desktop icon) for your desired configuration.  Everybody should change the <b>/tz...</b> option for their time zone... it comes set up for the US central time zone by default.  International uses should add a <b>/b...</b> command to set their daylight savings time information.
+<P>
+For convenience, Windows users can press the "n" key to edit the heather.cfg file in Notepad.  Changes will take effect after you restart Heather or issue an <i>r heather.cfg</i> keyboard command.
 <P>
 <hr>
 <P>
-<a href="./props.gif"><img src="./propst.gif" align=right hspace=20 vspace=20 border=0></a>
+<a href="./props.gif"><img src="./propst.gif" title="Example: use COM port 3, 10-second plot interval, 500 millidegrees C/division" align=right hspace=20 vspace=20 border=0></a>
 <P>
-<b><i>Command-line Options for Current Release (V3.XX)</i></b>
+<b><i>Command-line Options for Current Release (V5.XX)</i></b>
 <P>
 <pre>
+
 Startup command line options should be placed on the TARGET line in the
 Lady Heather program PROPERTIES or in the HEATHER.CFG file.  Most can also
-be executed with the keyboard / command.  Valid startup command options are:
+be executed with the keyboard / command.  
 
-             /#               - use COM# instead of COM1 default (#=1..99)
-             /0               - disable com port processing (if just reading a log file)
-             /ip=addr[:port#] - connect to TSIP server instead of local COM port
-             /a[=#]           - number of points to calc Adevs over (default=330000)
-                                If 0,  then all adev calculations are disabled.
-             /b[=#]           - set daylight savings time area (1=USA,2=EURO,3=AUST,4=NZ)
-             /b=nth,start_day,month,nth,end_day,month,hour - set custom DST rule
-                                day:0=Sun..6=Sat  month:1=Jan..12=Dec
-                                nth>0 = from start of month  nth<0 = from end of month
-             /c[=#]           - set Cable delay to # ns (default=77.03 ns (50 ft std coax))
-             /c=#f              set Cable delay in feet of 0.66Vp coax
-             /c=#m              set Cable delay in meters of 0.66Vp coax
-             /d#              - show dates in calendar #)
-                                A)fghan   haaB)     C)hinese  D)ruid   H)ebrew
-                                I)slamic  J)ulian   K)urdish  M)jd    iN)dian
-                                P)ersian  iS)o      T)zolkin  X)iuhpohualli  
-                                maY)an    aZ)tec Tonalpohualli
-             /e               - do not log message/time Errors and state changes
-             /f               - start in Fullscreen mode
-             /f[psak]         - toggle Pv,Static,Altitude,Kalman filter
-             /g[#]            - toggle Graph enable (#= a,b,c,d,e,h,l,m,o,p,s,t,u,x,z)
-                                (Adevs  Both map and adev tables  sat_Count  Dac  Errors
-                                 Holdover  K(constallation changes)  L(hide Location)
-                                 Map,no adev tables   Osc  Pps  R(RMS info)   Sound  Temperature
-                                 Update/scroll plot continuously  Watch  X(dops)  Z(clock)
-                                 j(el mask)  n(disable holiday greetings)
-             /h=file          - read command line options from .CFG config file
-             /i[=#]           - set plot Interval to # seconds (default=24 hour mode)
-             /j[=#]           - set ADEV sample period to # seconds (default=10 seconds)
-             /k               - disable Keyboard commands
-             /kb              - disable Beeps
-             /kc              - disable all writes to Config EEPROM
-             /km              - disable mouse
-             /kt              - disable Windows dialog/message timer
-             /k[?=#]          - set temp control parameter '?'
-             /l[=#]           - write Log file every # seconds (default=1)
-             /lh              - don't write timestamp headers in the log file
-             /m[=#]           - Multiply all plot scale factors by # (default is to double)
-             /ma              - toggle Auto scaling
-             /md[=#]          - set DAC plot scale factor (microvolts/divison)
-             /mi              - invert pps and temperature plots
-             /mo[=#]          - set OSC plot scale factor (parts per trillion/divison)
-             /mp[=#]          - set PPS plot scale factor (nanoseconds/divison)
-             /mt[=#]          - set TEMPERATURE plot scale factor (millidegrees/divison)
-             /n=hh:mm:ss      - exit program at specified time (optional: /n=month/day/year)
-             /na=hh:mm:ss     - sound alarm at specified time (optional: /n=month/day/year)
-             /na=#?           - sound alarm every #s secs,  #m mins,  #h hours  #d=days
-             /na=#?o          - sound alarm Once in #so secs,  #mo mins,  #ho hours  #d=days
-             /nd=hh:mm:ss     - dump screen at specified time (optional: /n=month/day/year)
-             /nd=#?           - dump screen every #s secs,  #m mins,  #h hours  #d=days
-             /nd=#?o          - dump screen Once in #so secs,  #mo mins,  #ho hours  #d=days
-             /nl=hh:mm:ss     - dump log at specified time (optional: /n=month/day/year)
-             /nl=#?           - dump log every #s secs,  #m mins,  #h hours  #d=days
-             /nl=#?o          - dump log Once in #so secs,  #mo mins,  #ho hours  #d=days
-             /nt              - attempt to wake up Nortel NTGxxxx receivers
-             /nx=hh:mm:ss     - exit program at specified time (optional: /n=month/day/year)
-             /nx=#?o          - exit program in #s secs,  #m mins,  #h hours  #d=days
-             /o[#]            - select ADEV type (#=A,H,M,T, O,P)
-                                Adev  Hdev  Mdev  Tdev  O=all osc types  P=all pps types
-             /p               - disable PPS output signal
-             /q[=#]           - set size of plot Queue in seconds (default=30 days)
-             /qf[=#]          - set max size of FFT (default=4096)
-             /r[=file]        - Read file (default=TBOLT.LOG)
-                                .LOG=log   .SCR=script   .LLA=lat/lon/altitude
-                                .ADV=adev  .TIM=ti.exe time file
-             /rt              - use Resolution-T serial port config (9600,8,O,1)
-             /ss[=#]          - do Self Survey (# fixes,  default=2000)
-             /sp[=#]          - do Precison Survey (# hours,  default/max=48)
-             /sf              - enter 2D/3D fix mode and map fixes
-             /t=#SSSSS/DDDDD  - show time at local time zone - #=gmt offset
-                                SSSSS=standard time zone id   DDDDD=daylight time zone id
-                                (note:  western hemisphere # is negative:  /T=-6CST/CDT)
-             /ta              - show dates in European dd.mm.yy format.
-             /tb=string       - set analog clock brand name.
-             /tc              - show Celcius temperatures
-             /td              - show DeLisle temperatures
-             /te              - show Reaumur temperatures
-             /tf              - show Fahrenheit temperatures
-             /tg              - sync outputs to GPS Time (default is UTC time)
-             /tj              - don't remove effects of tbolt firmware temperature smoothing
-             /th[=#]          - chime clock mode.  Chimes # times per hour.
-                                Tries to play \WINDOWS\MEDIA\HEATHER_CHIME.WAV,  else uses alarm sound.
-             /th[=#H]         - cuckoo clock mode.  Sings .WAV files # times per hour.
-                                Tries to play \WINDOWS\MEDIA\HEATHER_CHIME.WAV,  else uses alarm sound.
-                                Chimes the hour number on the hour,  one chime at other times.
-             /th[=#S]         - singing chime clock mode.  Sings .WAV files # times per hour.
-                                Tries to play \WINDOWS\MEDIA\HEATHER_SONGxx.WAV (xx=minute)
-             /tk              - show Kelvin temperatures
-             /tm              - show altitude in meters
-             /tn              - show Newton temperatures
-             /to              - show Romer temperatures
-             /tp              - show time as fraction of a day
-             /tq              - show time as total seconds of the day
-             /ts[odhm]        - set operating system time to UTC (once,daily,hourly,every minute)
-             /tsa[=#]         - set operating system time to UTC anytime difference exceeds # msecs
-             /tsx[=#]         - compensate for delay between 1PPS output and receiver timing message
-                                Value is in milliseconds.  Default is a +45 millisecond delay
-             /tt=#            - set active temp control setpoint to # degrees C
-             /tu              - sync outputs to UTC Time (default is UTC time)
-             /tw[=#]          - Sleep() for this many milliseconds when idle (default=10)
-             /tx              - show osc values with eXponent (default is ppb/ppt)
-             /t'              - show altitude in feet
-             /t"              - use degrees.minutes.seconds for lat/lon
-             /u               - toggle plot/adev queue Updates
-             /vt              - Text only Video screen
-             /vu              - Undersized (640x480) Video screen
-             /vs              - Small (800x600) Video screen
-             /vn              - Netbook (1000x540) Video screen
-             /vm              - Medium (1024x768) Video screen (default)
-             /vl              - Large (1280x1024) Video screen
-             /vv              - Very large (1440x900) Video screen
-             /vx              - eXtra large (1680x1050) Video screen
-             /vh              - Huge (1920x1080) Video screen
-             /vc=rowsXcols    - custom screen size (e.g. /vc=1200x800)
-             /wa=file         - set log file name to Append to (default=TBOLT.LOG)
-             /w=file          - set log file name to Write (default=TBOLT.LOG)
-             /x[=#]           - set plot display data filter count (default=10)
-             /y               - optimize plot grid for 24 hour display (/y /y = 12hr)
-             /y=#             - set plot view time to # minutes/division
-             /z[#][=val]      - toggle or set graph zero line ref value (#=d,o,p,t)
-                                (D)ac volts  (O)sc   (P)ps ns  (T)temp deg
-             /+               - sync PPS signal rising edge to time
-             /-               - sync PPS signal falling edge to time
-             /^               - sync OSC signal falling edge to time
+If the pathname to the executable is enclosed in quotes, any command-line
+options MUST appear outside the quotes as in the example at right.
 
-Put .CFG file, if any, in directory containing heather.exe.
+Valid command line options are:
+   /0               - disable com port processing (if just reading a log file)
+   /1..99           - use COM1 .. COM99 for receiver i/o
+   /ip=addr[:port#] - connect to TCP/IP server instead of local COM port
+   /a[=#]           - number of points to calc Adevs over (default=330000)
+                      If 0,  then all adev calculations are disabled.
+   /b[=#]           - set daylight savings time area (1=USA,2=EURO,3=AUST,4=NZ)
+   /b=nth,start_day,month,nth,end_day,month,hour - set custom DST rule
+                      day:0=Sun..6=Sat  month:1=Jan..12=Dec
+                      nth>0 = from start of month  nth<0 = from end of month
+   /br[=#]          - set serial port configuration. (default 9600:8:n:1)
+   /bs              - set time display to solar time
+   /bt              - start up in terminal emulator mode
+   /c[=#]           - set Cable delay to # ns (default=77.03 ns (50 ft std coax))
+   /c=#f              set Cable delay in feet of 0.66Vp coax
+   /c=#m              set Cable delay in meters of 0.66Vp coax
+   /d#              - show dates in calendar #
+                      A)fghan   haaB)     C)hinese  D)ruid   H)ebrew
+                      I)slamic  J)ulian   K)urdish  M)jd    iN)dian
+                      P)ersian  iS)o      T)zolkin  boliV)isn
+                      X)iuhpohualli       maY)an    aZ)tec Tonalpohualli
+   /de[=#]          - set debug information level
+   /dl[=file]       - write debug information log file
+   /dr[=file]       - write raw receiver data capture file
+   /e               - do not log message/time Errors and state changes
+   /f[psakit]       - toggle Pv,Static,Altitude,Kalman,Ionosphere,Troposphere filter
+   /fd[=#]          - set display filter count to # seconds (default=10)
+   /fg              - toggle GPX format for scheduled log dumps
+   /fx              - toggle XML format for scheduled log dumps
+   /g[#]            - toggle Graph enable (#= a,b,c,d,e,h,l,m,o,p,s,t,u,x,z)
+                      (Adevs  Both map and adev tables  sat_Count  Dac  Errors
+                       Holdover  K(constallation changes)    hide Location
+                       Map,no adev tables   Osc  Pps  R(RMS info)   Sound  Temperature
+                       Watch  X(dops)  Z(clock)  J(el mask)  
+                       N(disable holiday greetings)  Q(signal quality map)
+                       0) .. 9) toggle plots G0..G9   V)toggle LLA plots
+   /h=file          - read command line options from .CFG config file
+   /i[=#]           - set plot Interval to # seconds (default=24 hour mode)
+   /ir              - set read-only mode for receiver commands
+   /is              - set read-only mode for serial port
+   /it              - set no-pollng mode for receiver data
+   /j[=#]           - set ADEV sample period to # seconds (default=10 seconds)
+   /kb              - toggle Beep sounds
+   /kc              - toggle writes to Config EEPROM
+   /ke              - toggle quick exit with ESC key
+   /kj              - toggle showing sun and moon in satellite maps
+   /km              - toggle mouse enable
+   /kq              - toggle Keyboard enable
+   /ks              - toggle Sound files
+   /kt              - toggle Windows dialog/message timer
+   /k?[=#]          - set temp control PID parameter '?'
+   /l[=#]           - write Log file every entry # seconds (default=1)
+   /lc              - don't write any comments in the log file
+   /ld              - write signal level comments in the log file
+   /lo              - enable reading of old format log files
+   /lh              - don't write timestamp headers in the log file
+   /ls              - change log file value separator from tab to a comma
+   /m[=#]           - Multiply all plot scale factors by # (default is to double)
+   /ma              - toggle Auto scaling
+   /md[=#]          - set DAC plot scale factor (microvolts/divison)
+   /mi              - invert pps and temperature plots
+   /mo[=#]          - set OSC plot scale factor (parts per trillion/divison)
+   /mp[=#]          - set PPS plot scale factor (nanoseconds/divison)
+   /mt[=#]          - set TEMPERATURE plot scale factor (millidegrees/divison)
+   /m0../m9[=#]     - set scale factors of the other plots (units/divison)
+   /n=hh:mm:ss      - exit program at specified time (optional: /n=month/day/year)
+   /na=hh:mm:ss     - sound alarm at specified time (optional: /na=month/day/year)
+   /na=#?           - sound alarm every #s secs,  #m mins,  #h hours  #d=days
+   /na=#?o          - sound alarm Once in #so secs,  #mo mins,  #ho hours  #d=days
+   /nd=hh:mm:ss     - dump screen at specified time (optional: /n=month/day/year)
+   /nd=#?           - dump screen every #s secs,  #m mins,  #h hours  #d=days
+   /nd=#?o          - dump screen Once in #so secs,  #mo mins,  #ho hours  #d=days
+   /nl=hh:mm:ss     - dump log at specified time (optional: /n=month/day/year)
+   /nl=#?           - dump log every #s secs,  #m mins,  #h hours  #d=days
+   /nl=#?o          - dump log Once in #so secs,  #mo mins,  #ho hours  #d=days
+   /nr[=#]          - force receiver navigation rate to # Hz (default=1)
+   /nt              - attempt to wake up Nortel NTGxxxx receivers
+   /nx=hh:mm:ss     - exit program at specified time (optional: /n=month/day/year)
+   /nx=#?o          - exit program in #s secs,  #m mins,  #h hours  #d=days
+   /o[#]            - select ADEV type (#=A,H,M,T, O,P)
+                      Adev  Hdev  Mdev  Tdev  O=all osc types  P=all pps types
+   /p               - toggle PPS output signal enable
+   /pd              - disable PPS output signal
+   /pe              - enable PPS output signal
+   /po=lat,lon,alt  - force posiiton to lat,lon,altitude
+   /q[=#]           - set size of plot Queue in seconds (default=3 days)
+   /qf[=#]          - set max size of FFT (default=4096)
+   /r[=file]        - Read file (default=tbolt.log)
+                      .log  ,xml  .gpx (log files)
+                      .scr=script   .lla=lat/lon/altitude
+                      .log=log   .scr=script   .lla=lat/lon/altitude
+                      .adv=adev  .tim=ti.exe time file
+   /ro[=#]          - add # seconds to the GPS receiver date/time
+                      or /ro says 1024 weeks,  /ro=2* says 2048 weeks, etc
+   /rs=file         - get input from raw receiver data simulation file
+   /rt[=#]          - use Resolution-T serial port config (9600,8,ODD,1)
+                      [#=1]=force Resolution-T  [#=2]force Resolution SMT
+   /rx#[=leapsecs]  - set receiver type # (A=Acron  C=UCCM  D=Datum  E=NEC  G=GPSD
+                      J=Jupiter  K=Z3811A  M=Motorola  N=NMEA  R=Resolution-T
+                      S=SIRF  T=TSIPU=Ublox  V=Venus  X=system clock  8=NVS
+                      Y=SCPI-(NORTEL)  Z=SCPI-(Z3801A)  5=SCPI-(Z3816A, HP53xxx)r
+                      For receivers that do not report a valid leapsecond
+                      count you can specify the value to use
+   /si[=#]          - set maximum number of displayed satellites to #
+   /sp[=#]          - do Precison Survey (# hours,  default=48/max=96)
+   /sr[=#]          - enable sunrise/set display
+   /ss[=#]          - do Self Survey (# fixes,  default=2000)
+   /st              - toggle drawing of satellite position trails
+   /ta              - show dates in European dd.mm.yy format.
+   /tb              - do not label the analog watch face.
+   /tb=string       - set analog watch face brand name.
+   /tc              - show Celcius temperatures
+   /td              - show DeLisle temperatures
+   /te              - show Reaumur temperatures
+   /tf              - show Fahrenheit temperatures
+   /tg              - sync outputs to GPS Time (default is UTC time)
+   /th[=#]          - chime clock mode.  Chimes # times per hour.
+                      Tries to play heather_chime.WAV,  else uses alarm sound.
+   /th[=#H]         - cuckoo clock mode.  Sings .WAV files # times per hour.
+                      Tries to play heather_chime.WAV,  else uses alarm sound.
+                      Chimes the hour number on the hour,  one chime at other times.
+   /th[=#S]         - singing chime clock mode.  Sings .WAV files # times per hour.
+                      Tries to play souns file heather_songxx.WAV (xx=minute)
+   /th=1B           - enables ships bells clock mode.
+   /th=0B           - disables ships bells clock mode.
+   /ti              - toggle 12/24 hour digital clock mode
+   /tj              - don't remove effects of tbolt firmware temperature smoothing
+   /tk              - show Kelvin temperatures
+   /tm              - show altitude in meters
+   /tn              - show Newton temperatures
+   /to              - show Romer temperatures
+   /tp              - show time as fraction of a day
+   /tq              - show time as total seconds of the day
+   /tr              - show Rankine temperatures
+   /ts[odhm]        - set operating system time to UTC (once,daily,hourly,every minute)
+   /tsa[=#]         - set operating system time to UTC anytime difference exceeds # msecs
+   /tsx[=#]         - compensate for delay between 1PPS output and receiver timing message
+                      Value is in milliseconds.  Default is a +45 millisecond delay
+   /tsj             - toggle show digital clock Julian date.time
+   /tsz             - toggle show digital clock with milliseconds
+   /tt=#            - set active temp control setpoint to # degrees C
+   /tu              - sync outputs to UTC Time (default is UTC time)
+   /tw[=#]          - Sleep() for # milliseconds when idle (default=10)
+   /tx              - show osc values with eXponent (default is ppb/ppt)
+   /ty[=#]          - show temperatures to # decimal places
+   /tz=#SSSSS/DDDDD - show time at local time zone - #=gmt offset
+                      SSSSS=standard time zone id   DDDDD=daylight time zone id
+                      (note:  western hemisphere # is negative:  /T=-6CST/CDT)
+   /t'              - show altitude in feet
+   /t"              - use degrees.minutes.seconds for lat/lon
+   /u               - toggle plot/adev queue Updates
+   /uc=val          - force UTC delatT values
+   /ud=val          - set oscillator disciplining damping value
+   /ut=val          - set oscillator disciplining time constant value
+   /ug=val          - set oscillator disciplining gain value
+   /up=val          - set UCCM GPSDO pullin range
+   /ui=val          - set oscillator disciplining initial dac value
+   /uh=val          - set oscillator maximum allowed DAC value
+   /ul=val          - set oscillator minimum allowed DAC value
+   /un=val          - set oscillator disciplining minimum dac value
+   /uo=val          - force UTC-GPS leapsecond offset
+   /ux=val          - set oscillator disciplining maximum dac value
+   /vt              - Text only Video screen
+   /vu              - Undersized (640x480) Video screen
+   /vs              - Small (800x600) Video screen
+   /vm              - Medium (1024x768) Video screen (default)
+   /vn              - Netbook (1000x540) Video screen
+   /vl              - Large (1280x1024) Video screen
+   /vv              - Very large (1440x900) Video screen
+   /vx              - eXtra large (1680x1050) Video screen
+   /vh              - Huge (1920x1080) Video screen
+   /vc=colsXrows    - custom screen size (e.g. /vc=1200x800)
+   /vf              - start in Fullscreen mode
+   /vi              - invert black and white on screen
+   /wa=file         - set log file name to Append to (default=tbolt.log)
+   /w=file          - set log file name to Write (default=tbolt.log)
+   /x=#             - set experimental oscillator disiplining PID value
+   /y               - optimize plot grid for 24 hour display (/y /y = 12hr)
+   /y=#             - set plot view time to # minutes/division
+   /z[#][=val]      - toggle or set graph zero line ref value (#=d,o,p,t,0..9)
+                      (D)ac volts  (O)sc   (P)ps ns  (T)temp deg  (0)..(9)other plots
+   /+               - sync PPS signal rising edge to time
+   /-               - sync PPS signal falling edge to time
+   /^               - toggle OSC signal edge referenced to the PPS signal
+   /^f              - set OSC signal falling edge referenced to the PPS signal
+   /^r              - set OSC signal rising edge referenced to the PPS signal
 </pre>
-
-<!--
-<font color=BLUE><i>Note: These options apply to Heather V2.  For updated command-line options available in the current V3 beta version, run <b>heather /?</b> or type <b>?</b> from within the program</i></font>.
-<pre>
-             /#               - use COM# instead of COM1 default
-             /0               - disable com port processing (if just reading a log file)
-             /ip=addr[:port#] - connect to TSIP server instead of local COM port
-             /a[=#]           - number of points to calc Adevs over (default=330000)
-                                If 0,  then all adev calculations are disabled.
-             /c[=#]           - set Cable delay to # ns (default=77.03 ns (50 ft std coax))
-             /e               - do not log message/time Errors and state changes
-             /f               - start in Fullscreen mode
-             /g[#]            - toggle Graph enable (#= a,b,c,d,e,h,l,m,o,p,s,t,u,x,z)
-                                (Adevs  Both map and adev tables  sat_Count  Dac  Errors  Holdover
-                                 Location  Map,no adev tables   Osc  Pps  Sound  Temperature  Updates
-                                 X-dops  Z-clock)
-             /h=file          - read command line options from file
-             /i[=#]           - set plot Interval to # seconds (default=10 seconds)
-             /j[=#]           - set ADEV period to # seconds (default=10 seconds)
-             /k               - disable Keyboard commands
-             /kc              - don't exit on com port errors
-             /l[=#]           - write Log file every # seconds (default=1)
-             /m[=#]           - Multiply all plot scale factors by # (default is to double)
-             /ma              - Toggle auto scaling
-             /md[=#]          - set DAC plot scale factor (microvolts/divison)
-             /mo[=#]          - set OSC plot scale factor (parts per trillion/divison)
-             /mp[=#]          - set PPS plot scale factor (nanoseconds/divison)
-             /mt[=#]          - set TEMPERATURE plot scale factor (millidegrees/divison)
-             /n=hh:mm:ss      - end program at specified time (optional: /n=month/day/year) 
-             /na=hh:mm:ss     - sound alarm at specified time (optional: /n=month/day/year) 
-             /o[#]            - select ADEV type (#=A,H,M,T, O,P)
-             /p               - disable PPS output signal
-             /q[=#]           - set size of plot Queue in seconds (default=30 days)
-             /r[=file]        - Read log file into queues (default=TBOLT.LOG)
-             /ss[=#]          - do Self Survey (# fixes,  default=2000)
-             /sp[=#]          - do Precison Survey (# hours,  default/max=48)
-             /sf              - enter 3D fix mode and map fixes
-             /tg              - sync outputs to GPS Time (default is GPS time)
-             /tu              - sync outputs to UTC Time (default is GPS time)
-             /ts[dh]          - set system time from GPS (once,daily,hourly)
-             /t#zzz           - show time at local time zone (#=gmt offset, zzz=zone id)
-             /tf              - use Fahrenheit temperature (default is Celsius)
-             /t"              - use degrees.minutes.seconds for lat/lon
-             /u               - toggle plot/adev queue Updates
-             /vs              - Small (800x600) Video screen
-             /vm              - Medium (1024x768) Video screen (default)
-             /vl              - Large (1280x1024) Video screen
-             /vv              - Very large (1440x900) Video screen
-             /vx              - eXtra large (1680x1050) Video screen
-             /vh              - Huge (1920x1080) Video screen
-             /wa=file         - set log file name to Write (append) (default=TBOLT.LOG)
-             /w=file          - set log file name to Write (default=TBOLT.LOG)
-             /x[=#]           - set plot display data filter count (default=10)
-             /y               - optimize plot grid for 24 hour display (/y /y = 12hr)
-             /y=#             - set plot view time to # minutes/division
-             /z[#][=val]      - toggle or set graph zero line ref value (#=d,o,p,t)
-                                (D)ac volts  (O)sc   (P)ps ns  (T)temp deg
-             /+               - sync PPS signal rising edge to time
-             /-               - sync PPS signal falling edge to time
-             /^               - sync OSC signal falling edge to time
--->
-
 <br>
 <P>
 <b><i>Remote Operation</i></b>
@@ -361,7 +401,7 @@ the PC's TCP/IP host address; e.g.:
         _______________________________________________________________________________
         
         Lady Heather's Control Server V0.90 of Dec  6 2009            John Miles, KE5FX
-        Press ESC to terminate                                        jmiles@pop.net
+        Press ESC to terminate                                        john@miles.io
         _______________________________________________________________________________
 
 [12/6/2009 1:36:53 PM] Initializing host "jmcore", address 192.168.1.101:45000, Windows Sockets V1.1 (WinSock 2.0)
@@ -383,9 +423,11 @@ be accessed with <pre>        heather /ip=192.168.1.101:40000</pre>
 <b><i>Hints and Kinks</i></b>
 <br>
 <ul>
-<li>You can run in fullscreen mode by adding <b>/f</b> to the Target line in your Windows shortcut.  (Click on the image above to see an example of how to add command-line options to your shortcut.)  You can also use the Maximize button to enter fullscreen mode, or alt-Enter to toggle it.<P>
+<li>You can run in fullscreen mode by adding <b>/fu</b> to the Target line in your Windows shortcut.  (Click on the image above to see an example of how to add command-line options to your shortcut.)  This is much more likely to work properly in 800x600, 1024x768, or 1280x1024 resolutions; attempting to use fullscreen mode with 
+other window sizes may cause undefined behavior.
+<P>
 <li>The default window size is 1024x768, plus the standard borders and caption.  
-If your desktop isn't large enough to accommodate the entire window, <b><font color=RED>it will be rendered at half-size</font></b>.  Use the <b>/vs</b> (800x600 window size) and/or <b>/f</b> (fullscreen mode) command-line options to obtain a readable display.<P>
+If your desktop isn't large enough to accommodate the entire window, <b><font color=RED>it may be rendered at half-size</font></b>.  Use the <b>/vs</b> (800x600 window size) and/or <b>/fu</b> (fullscreen mode) command-line options to obtain a readable display.<P>
 <li>If you try to enter a fullscreen display mode that isn't supported by your display hardware or drivers, you may receive error messages about DirectDraw initialization failures. <P>
 <li>The default serial port is COM1.  COM ports from COM2 to COM99 are supported by adding a parameter of the form <b>/2</b> ... <b>/99</b> to your command line or Windows shortcut.<P>
 <li>The Thunderbolt's communications settings must be configured at its factory default values (9600 baud, 8 data bits, no parity, 1 stop bit).<P>
@@ -398,6 +440,7 @@ This version may not be compatible with Windows DOS boxes on many systems unless
 to disable graphics, but you can use it as a "real" DOS application to recycle an obsolete PC as a dedicated monitoring 
 terminal.  One user reports mounting the Thunderbolt in an old laptop's CD-ROM drive bay and powering it
 from the drive bay's +12V connection, yielding an elegant self-contained GPS clock/control package with battery backup.
+HEATHDOS.EXE is included in the legacy V3.10 distribution linked above, but not in V5.00 and subsequent releases.
 </ul>
 <br>
 <P>
@@ -481,18 +524,39 @@ from the drive bay's +12V connection, yielding an elegant self-contained GPS clo
 <li>Version 3.10 of 19-Apr-12<ul>
 <li> Many new commands, features, and fixes -- see comment header in HEATHER.CPP for details!
 </ul>
+<P>
+<li>Version 5.00 of 9-Dec-16<ul>
+<li> Many <i>more</i> new commands, features, and fixes.  As before, the comment header in HEATHER.CPP is the most up-to-date documentation available.  
+<li> A few CLI parameters have changed, such as <b>/x</b> (which is now <b>/fd</b>).  The <b>/f</b> (fullscreen) command-line argument has also changed to <b>/fu</b>.  For best results, <b>/fu</b> should be used in conjunction with <b>/vs</b>, <b>/vm</b>, or <b>/vl</b> to run in standard SVGA resolutions.
+</ul>
 </ul><P>
 
 
 <br>
 <hr>
-<P>
-Source code compilable with most versions of MSVC from VS6 to current Visual Studio .NET release, including the free <a href="http://msdn.microsoft.com/vstudio/express/default.aspx">Microsoft Visual Studio Express</a> package.
-<br>
-No warranties, expressed or implied, are offered with this program. 
-<br>
-Use at your own risk!
+<pre>
+ Permission is hereby granted, free of charge, to any person obtaining 
+ a copy of this software and associated documentation files (the "Software"),
+ to deal in the Software without restriction, including without limitation 
+ the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ and/or sell copies of the Software, and to permit persons to whom the 
+ Software is furnished to do so, subject to the following conditions:
 
+ The above copyright notice and this permission notice shall be included 
+ in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS 
+ OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ DEALINGS IN THE SOFTWARE.
+</pre>
+Source code is compilable with most versions of Visual Studio including the free Community Edition package. 
+<br>
+<br>
+<hr>
 </font>
 </body>
 </html>

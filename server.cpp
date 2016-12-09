@@ -2,7 +2,7 @@
 // Lady Heather's TSIP bridge
 //
 // 5-Dec-2009 John Miles, KE5FX
-// jmiles@pop.net
+// john@miles.io
 //
 // Server exit codes:
 //
@@ -206,7 +206,7 @@ int main(int argc, char **argv)
 
    printf("_______________________________________________________________________________\n\n");
    printf("Lady Heather's Control Server V" SERVER_VERSION" of "__DATE__"            John Miles, KE5FX\n");
-   printf("Press ESC to terminate, Scroll Lock to view traffic           jmiles@pop.net\n");
+   printf("Press ESC to terminate, Scroll Lock to view traffic           john@miles.io\n");
    printf("_______________________________________________________________________________\n\n");
 
    //

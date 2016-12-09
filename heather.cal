@@ -22,6 +22,10 @@
 #
 #     month - (1=January ... 12=December  0=ignore this entry)
 #
+#             If DAY < 0 then MONTH is the day-of week code.
+#             This allows for doing days like Friday the 13th (0, -13, 5)
+#
+#
 #     text  - The text to display when the event occurs.
 #
 #  Comment lines can start with # * / or ; in column 1
@@ -54,10 +58,10 @@
 111 0  3  Happy Easter! 
 112 0  9  It's Grandparent's day... 
 113 0  9  Rosh Hashanha starts tonight... 
-114 0  9  Yom Kipper starts tonight... 
+114 0  9  Yom Kippur starts tonight... 
 115 0  3  Passover starts tonight... 
 116 0 11  Chappy Chanukah! 
-117 0  3  Purim start tonight! 
+117 0  3  Purim starts tonight! 
 118 0  3  It's Mardi Gras... time to party hardy! 
 119 0  1  Happy Islamic New Year! 
 120 0  1  It's Asura! 
@@ -67,8 +71,8 @@
 124 0  1  Happy Mayan New Year! 
 125 0  1  Happy Aztec New Year!  Sacrifice your enemies!  Eat their hearts! 
 126 0  1  Tomorrow is the Mayan Doomday!  The world ends... wear clean underwear! 
-127 0  1  Sukkot start tonight...
-128 0  1  Shavout start tonight...
+127 0  1  Sukkot starts tonight...
+128 0  1  Shavout starts tonight...
 133 0  1  Tomorrow is UNIX doomstime...  wear a clean pocket protector
 
  0  1  1  Happy New Year! 
@@ -77,7 +81,8 @@
  1  0  2  Hope you didn't bet on the losers... 
  0 14  2  Happy Valentine's Day! 
  3  1  2  Greetings Mr. Presidents!  Happy Family Day! 
- 0 13  3  Happy birthday Pluto!  You're still our favorite planet.  IAU sucks!
+ 0 18  2  Happy birthday Pluto!  You're still our favorite planet.  IAU sucks!
+ 0 14  3  Happy pi day!
  0 15  3  Beware the Ides of March! 
  0 17  3  Happy Saint Patrick's Day! 
  0  1  4  April Fools! 
@@ -95,13 +100,15 @@
  0 14  7  Happy Bastille Day! 
  0 15  8  Happy Independence Day, India! 
  1  1  9  Happy Labor Day! 
- 0  2 10  Happy Birthday, Mr. Ghandi... 
- 0  9 10  Way to go, Leif! 
+ 1  6  9  It's Vulture Awareness Day
  0 11  9  Another day that will live in infamy... 
  0 17  9  We the People of the United Sates of America... 
- 0 19  9  Aaargh matey... it be talk like a pirate day! 
+ 0 19  9  Yarrr matey... it be talk like a pirate day! 
+ 0 28  9  It's National Drink Beer Day!
+ 0  2 10  Happy Birthday, Mr. Ghandi... 
+ 0  9 10  Way to go, Leif! 
  2  1 10  In 1492, Columbus sailed the ocean blue... 
- 3  5 10  Woohoo! It's New Jersey Credit Union Day!
+ 3  4 10  Woohoo! It's New Jersey Credit Union Day!
  0 24 10  It's United Nations Day! 
  0 31 10  Happy Halloween! 
  0  1 11  Buenos Dias Los Muertos! 
@@ -115,3 +122,4 @@
  0 25 12  Merry Christmas! 
  0 26 12  Happy Boxing Day! 
  0 31 12  Stay home tonight, there are too many crazy people out there... 
+ 0 -13 5  Today is Friday the 13th...  stay home!

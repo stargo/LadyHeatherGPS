@@ -5,7 +5,7 @@
 // IPSERVER: Template that implements a simple TCP/IP server, managing 
 // an array of IPCONN-derived connection instances on behalf of the app
 //
-// jmiles@pop.net 12-Mar-10
+// john@miles.io 12-Mar-10
 //
 // *****************************************************************************
 
