@@ -17116,7 +17116,15 @@ int old_time_color;
    thickness = 2;
    if((zoom_screen == 'X') || (zoom_screen == 'Y')) thickness = 3;
 
+   #ifdef USE_PPS
+   if (pps_handle == -1) {
+       a = hand_angle((double) pri_seconds + pri_frac);
+   } else {
+       a = hand_angle((double) pri_seconds);
+   }
+   #else
    a = hand_angle((double) pri_seconds + pri_frac);
+   #endif
    x = (int) ((ACLOCK_R-AA) * cos(a));
    y = (int) ((ACLOCK_R-AA) * sin(a));  
    if(zoom_screen == 'X') thick_line(aclock_x,aclock_y,  aclock_x+x,aclock_y+y, BLACK, thickness+2);

@@ -44104,9 +44104,17 @@ int col_switch;
 
    digital_clock_shown = 0;
    #ifdef DIGITAL_CLOCK
+   #ifdef USE_PPS
+   pps_digital_clock_row = -1;
+   pps_digital_clock_col = -1;
+   #endif
       if(zoom_screen == 'I') ;
 //    else if(((plot_digital_clock || all_adevs) && ((all_adevs == SINGLE_ADEVS) || (SCREEN_WIDTH > NARROW_SCREEN))) || (zoom_screen == 'C')) {
       else if((plot_digital_clock && ((all_adevs == SINGLE_ADEVS) || (SCREEN_WIDTH > NARROW_SCREEN))) || (zoom_screen == 'C')) {
+         #ifdef USE_PPS
+         pps_digital_clock_row = row;
+         pps_digital_clock_col = col;
+         #endif
          time_exit = show_digital_clock(row, col);
          if((time_exit == 0) && (all_adevs == SINGLE_ADEVS)) info_under_azel = 0;
 

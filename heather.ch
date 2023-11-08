@@ -427,6 +427,10 @@ EXTERN char *unit_file_name;  // base name of files to write (based upon receive
    #include <netinet/in.h>
    #include <netdb.h> 
    #include <libgen.h>
+   #define USE_PPS
+   #ifdef USE_PPS
+   #include <sys/timepps.h>
+   #endif
 
    #define USE_X11
    #define SIMPLE_HELP
@@ -4675,6 +4679,11 @@ EXTERN int dynamic_trend_line;  // if set, update trend line info plot title dyn
 EXTERN int trend_rate_display;  // selects units per day (0) or per hour (1) trend line rate display
                                 // or per minute (2) or per second (3) trend line rate display
 
+#ifdef USE_PPS
+EXTERN pps_handle_t pps_handle;
+EXTERN COORD pps_digital_clock_row;
+EXTERN COORD pps_digital_clock_col;
+#endif
 
 #ifdef FFT_STUFF
    typedef struct {   /* COMPLEX STRUCTURE */

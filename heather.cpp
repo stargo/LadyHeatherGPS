@@ -7997,6 +7997,7 @@ int x11_mouse;            // flags x11 mouse motion detected
 int my_mouse;             // flag set if mouse is in the Heather X11 window
 int no_mouse_review;      // used to inhibit recursive calls to get_mouse_info
 int com_tick;             // used to fake SERIAL_CHAR_AVAILABLE() if no receiver detected
+int inhibit_refresh;      // used to prevent mid-second screen refreshes when using PPS
 
 
 #ifdef WIN_VFX            // using WIN_VFX library for screen/mouse/keyboard
@@ -10152,6 +10153,7 @@ void refresh_page(void)
    // also flush the X11 drawing queue
 
    if(display == 0) return;
+   if (inhibit_refresh) return;
 
 if(0 && sim_file && (sim_eof == 0)) {  // this can double the sim file rate
    if((com_tick % 200) != 10) return;
@@ -20627,6 +20629,81 @@ void process_extra_ports(int why)
    }
 }
 
+int process_pps(int why)
+{
+   #ifdef USE_PPS
+   static int last_pps = -1;
+   static unsigned int last_pps_sequence = 0;
+
+   if (pps_handle != -1) {
+       pps_info_t pps_info;
+       struct timespec pps_timeout;
+
+       pps_timeout.tv_sec = 0;
+       pps_timeout.tv_nsec = 0;
+       time_pps_fetch(pps_handle, PPS_TSFMT_TSPEC, &pps_info, &pps_timeout);
+       if (last_pps_sequence != pps_info.assert_sequence) {
+           if (last_pps_sequence + 1 == pps_info.assert_sequence) {
+               if (((g_hours != 23) ||
+                    (g_minutes != 59) ||
+                    (g_seconds < 59)) &&
+                   ((hours != 23) ||
+                    (minutes != 59) ||
+                    (seconds < 59))) {
+                   g_seconds++;
+                   if (g_seconds == 60) {
+                       g_seconds = 0;
+                       g_minutes++;
+                   }
+                   if (g_minutes == 60) {
+                       g_minutes = 0;
+                       g_hours++;
+                   }
+                   seconds++;
+                   if (seconds == 60) {
+                       seconds = 0;
+                       minutes++;
+                   }
+                   if (minutes == 60) {
+                       minutes = 0;
+                       hours++;
+                   }
+                   if (have_tow)
+                     tow++;
+                   jd_utc += jtime(0, 0, 1, 0.0-pri_frac);
+                   jd_gps += jtime(0, 0, 1, 0.0-pri_frac);
+                   jd_tt += jtime(0, 0, 1, 0.0-pri_frac);
+                   jd_local += jtime(0, 0, 1, 0.0-pri_frac);
+                   g_frac = 0.0;
+                   raw_frac = 0.0;
+                   adjust_tz(42);
+                   pri_frac = 0.0; //fix rounding errors
+                   show_time_info();
+                   silly_clocks();
+                   if ((pps_digital_clock_row != -1) &&
+                       (pps_digital_clock_col != -1)) {
+                       if(!(text_mode && first_key)) {
+                           show_digital_clock(pps_digital_clock_row, pps_digital_clock_col);
+                       }
+                       pps_digital_clock_row = -1;
+                       pps_digital_clock_col = -1;
+                   }
+                   draw_maps();
+                   refresh_page();
+                   last_pps = g_seconds;
+               }
+           }
+           last_pps_sequence = pps_info.assert_sequence;
+       }
+   }
+   if (last_pps == g_seconds) {
+       return 1;
+   }
+
+   last_pps = -1;
+   #endif
+   return 0;
+}
 
 void get_device_messages(int serial_avail)
 {
@@ -20876,6 +20953,7 @@ reset_kbd_timer();
          else if(rcvr_type == TIDE_RCVR) ;
          else if(com[RCVR_PORT].process_com == 0) refresh_page();
 
+         process_pps(2);
 process_extra_ports(3);
          break;
       }
@@ -20883,8 +20961,12 @@ process_extra_ports(3);
          reset_com_timer(RCVR_PORT);
       }
 
+      if (process_pps(1)) {
+          inhibit_refresh = 1;
+      }
       get_device_messages(i);  // process any data from the input devices
       process_extra_ports(4);   // process the extra devices
+      inhibit_refresh = 0;
 
       if(get_mouse_info() == 0) {     // show queue data at the mouse cursor
          if(i == 0) refresh_page();   // keep refreshing page in case no serial data
@@ -22034,6 +22116,24 @@ szAppName[0] = 0;
    if(calc_rcvr) {
       start_calc_zoom(1);
    }
+
+   #ifdef USE_PPS
+   {
+      int pps_fd = -1;
+      pps_handle = -1;
+      pps_fd = open("/dev/pps0", O_RDWR, 0);
+      if (pps_fd != -1) {
+          pps_params_t pps_params;
+          time_pps_create(pps_fd, &pps_handle);
+          time_pps_getparams(pps_handle, &pps_params);
+          if ((pps_params.mode & PPS_CAPTUREASSERT) == 0) {
+              fprintf(stderr, "%s cannot currently CAPTUREASSERT\n", "/dev/pps0");
+              time_pps_destroy(pps_handle);
+              pps_handle = -1;
+          }
+      }
+   }
+   #endif
 
    do_gps();            // run the receiver until something says stop 
 
