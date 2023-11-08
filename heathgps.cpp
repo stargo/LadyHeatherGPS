@@ -37194,6 +37194,12 @@ year,month,day, hours,minutes,seconds,raw_frac);
          else if(i == 1) rcvr_mode = RCVR_MODE_ACQUIRE;
          else            rcvr_mode = RCVR_MODE_UNKNOWN;
       }
+      else if(!strcmp(gpsd_cmd, "\"LEAPSECONDS\"")) {
+         if (!user_set_utc_ofs) {
+            utc_offset = atoi(msg_field);
+            check_utc_ofs(11);
+	 }
+      }
    }
 
 
