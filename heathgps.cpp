@@ -37294,10 +37294,10 @@ log_gpsd_cmd();
          else                            sat[prn].tracking = (-1);
       }
 
-   }
+      if((az < 999.0F) && (el < 999.0F)) {
+         set_sat_azel(prn, (float) az, (float) el);
+      }
 
-   if((az < 999.0F) && (el < 999.0F)) {
-      set_sat_azel(prn, (float) az, (float) el);
    }
 
    sat_count = saw_sats;
