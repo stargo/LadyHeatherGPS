@@ -16358,8 +16358,8 @@ void config_utc_mode(int set_utc_ofs)
 
    if(!user_set_utc_ofs && set_utc_ofs) { 
       get_clock_time();
-      if(clk_jd < jdate(2019,7,1)) utc_offset = 18;
-      else utc_offset = (int) (43.216 + (double)(clk_year-2061)*0.567);
+      if(clk_jd < jdate(2024,7,1)) utc_offset = 18;
+      else utc_offset = (int) (40.216 + (double)(clk_year-2061)*0.567);
       have_utc_ofs = (-1);
    }
 }
