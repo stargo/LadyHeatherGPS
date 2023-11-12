@@ -2686,7 +2686,7 @@
 //             format. 
 //
 //   The "/tl" toggle command line option shows dates in the ISO
-//             yyyy.mm.dd format instead of the normal 12 Oct 2016
+//             yyyy-mm-dd format instead of the normal 12 Oct 2016
 //             format. 
 //
 //
@@ -22898,7 +22898,7 @@ int fs_help;
          "   /sw[=#]          - Sleep() for # milliseconds after proceesing\r\n"
          "                      each message when reading a simulation file (default=100)\r\n"
          "   /ta              - show dates in European dd.mm.yyyy format.\r\n"
-         "   /tl              - show dates in ISO yyyy.mm.dd format.\r\n"
+         "   /tl              - show dates in ISO yyyy-mm-dd format.\r\n"
          "   /tb              - do not label the analog watch face.\r\n"
          "   /tb=string       - set analog watch face brand name.\r\n"
          "   /tc              - show Celcius temperatures\r\n"

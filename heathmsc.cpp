@@ -16368,7 +16368,7 @@ char *date_flag;
       sprintf(date, "%02d.%02d.%04d%s ", pri_day, pri_month, pri_year, date_flag);
    }
    else if(show_iso_dates) {
-      sprintf(date, "%04d.%02d.%02d%s ", pri_year, pri_month, pri_day, date_flag);
+      sprintf(date, "%04d-%02d-%02d%s ", pri_year, pri_month, pri_day, date_flag);
    }
    else {
       pri_month = fix_month(pri_month);
