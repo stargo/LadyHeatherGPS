@@ -22888,6 +22888,7 @@ int fs_help;
          "   /y               - optimize plot grid for 24 hour display (/y /y = 12hr)\r\n"
          "   /y=#             - set plot view time to # minutes/division\r\n"
          "   /zs?             - start up with zoomed full screen display '?'\r\n"
+         "   /zst=M[M*][Z]    - idle timeout and zoom screen (10C)\r\n"
          "   /z[#][=val]      - toggle or set graph zero line ref value (#=d,o,p,t,0..9)\r\n"
          "                      (D)ac volts  (O)sc   (P)ps ns  (T)temp deg  (0)..(9)other plots\r\n"
          "   /+               - sync PPS signal rising edge to time\r\n"

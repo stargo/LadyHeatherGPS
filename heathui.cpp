@@ -22633,6 +22633,31 @@ if((sat_cols > 1) && (max_sat_display < 16)) max_sat_display = 16;
          else if(d == 'o') plot[OSC].float_center  = toggle_option(plot[OSC].float_center, e); 
          else if(d == 'p') plot[PPS].float_center  = toggle_option(plot[PPS].float_center, e); 
          else if(d == 't') plot[TEMP].float_center = toggle_option(plot[TEMP].float_center, e); 
+         else if((d == 's') && (e == 't') && (f == '=') && arg[5]) {  // /zst=M[M*][Z] - idle timeout and zoom screen (10C)
+            idle_timeout = atoi(&arg[5]);
+            if(idle_timeout < 0) idle_timeout = 0;
+
+            if(     strchr(&arg[5], 'A') || strchr(&arg[5], 'a')) idle_screen = 'A';
+            else if(strchr(&arg[5], 'B') || strchr(&arg[5], 'b')) idle_screen = 'B';
+            else if(strchr(&arg[5], 'C') || strchr(&arg[5], 'c')) idle_screen = 'C';
+            else if(strchr(&arg[5], 'D') || strchr(&arg[5], 'd')) idle_screen = 'D';
+            else if(strchr(&arg[5], 'E') || strchr(&arg[5], 'e')) idle_screen = 'E';
+            else if(strchr(&arg[5], 'I') || strchr(&arg[5], 'i')) idle_screen = 'I';
+            else if(strchr(&arg[5], 'L') || strchr(&arg[5], 'l')) idle_screen = 'L';
+            else if(strchr(&arg[5], 'M') || strchr(&arg[5], 'm')) idle_screen = 'M';
+            else if(strchr(&arg[5], 'N') || strchr(&arg[5], 'n')) idle_screen = 'N';
+            else if(strchr(&arg[5], 'O') || strchr(&arg[5], 'o')) idle_screen = 'O';
+            else if(strchr(&arg[5], 'P') || strchr(&arg[5], 'p')) idle_screen = 'P';
+            else if(strchr(&arg[5], 'R') || strchr(&arg[5], 'r')) idle_screen = 'R';
+            else if(strchr(&arg[5], 'S') || strchr(&arg[5], 's')) idle_screen = 'S';
+            else if(strchr(&arg[5], 'U') || strchr(&arg[5], 'u')) idle_screen = 'U';
+            else if(strchr(&arg[5], 'V') || strchr(&arg[5], 'v')) idle_screen = 'V';
+            else if(strchr(&arg[5], 'W') || strchr(&arg[5], 'w')) idle_screen = 'W';
+            else if(strchr(&arg[5], 'X') || strchr(&arg[5], 'x')) idle_screen = 'X';
+            else if(strchr(&arg[5], 'Y') || strchr(&arg[5], 'y')) idle_screen = 'Y';
+            else if(strchr(&arg[5], 'Z') || strchr(&arg[5], 'z')) idle_screen = 'Z';
+            else idle_screen = 'C';
+	 }
          else if((d == 's') && e) {  // /zs? - force zoom screen mode (has problems!)
             add_kbd('z');
             add_kbd(e);
