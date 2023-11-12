@@ -18,19 +18,24 @@ ifeq ($(OS),Linux)
 # WARNS = -Wno-write-strings 
 WARNS = -Wno-write-strings -Wall -Wno-unused-but-set-variable -Wno-unused-variable -Wno-format-overflow
 
+DEFINES=
+ifneq (,$(wildcard /usr/include/sys/timepps.h))
+  DEFINES+=-DUSE_PPS
+endif
+
 all: heather
 
 heather.o: heather.cpp heather.ch heathfnt.ch makefile
-		  $(CC) -c heather.cpp $(WARNS)
+		  $(CC) -c heather.cpp $(WARNS) $(DEFINES)
 
 heathmsc.o: heathmsc.cpp heather.ch heathfnt.ch makefile
-		  $(CC) -c heathmsc.cpp $(WARNS)
+		  $(CC) -c heathmsc.cpp $(WARNS) $(DEFINES)
 
 heathui.o: heathui.cpp heather.ch heathfnt.ch makefile
-		  $(CC) -c heathui.cpp $(WARNS)
+		  $(CC) -c heathui.cpp $(WARNS) $(DEFINES)
 
 heathgps.o: heathgps.cpp heather.ch heathfnt.ch makefile
-		  $(CC) -c heathgps.cpp $(WARNS)
+		  $(CC) -c heathgps.cpp $(WARNS) $(DEFINES)
 
 heather: heather.o heathmsc.o heathui.o heathgps.o
 		  $(CC) heather.o heathui.o heathgps.o heathmsc.o -o heather -lm -lX11
