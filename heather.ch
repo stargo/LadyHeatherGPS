@@ -4680,6 +4680,7 @@ EXTERN int trend_rate_display;  // selects units per day (0) or per hour (1) tre
                                 // or per minute (2) or per second (3) trend line rate display
 
 #ifdef USE_PPS
+EXTERN char pps_device[MAX_TEXT_COLS+1]; // PPS device name to select
 EXTERN pps_handle_t pps_handle;
 EXTERN COORD pps_digital_clock_row;
 EXTERN COORD pps_digital_clock_col;

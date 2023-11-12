@@ -20591,6 +20591,9 @@ subtract_base_value = 0;
    strcpy(antenna_number, DEFAULT_NUM);
    rinex_fmt = 2.11;
 //rinex_fmt = 3.03;  // RINEX v3 not yet implemented
+   #ifdef USE_PPS
+   pps_device[0] = 0;
+   #endif
 }
 
 
@@ -22118,10 +22121,10 @@ szAppName[0] = 0;
    }
 
    #ifdef USE_PPS
-   {
+   pps_handle = -1;
+   if (pps_device[0] != 0) {
       int pps_fd = -1;
-      pps_handle = -1;
-      pps_fd = open("/dev/pps0", O_RDWR, 0);
+      pps_fd = open(pps_device, O_RDWR, 0);
       if (pps_fd != -1) {
           pps_params_t pps_params;
           time_pps_create(pps_fd, &pps_handle);
@@ -22705,6 +22708,9 @@ int fs_help;
 #ifdef TCP_IP
          "   /ip=addr[:port#] - connect to TCP/IP server instead of local COM port\r\n"
 #endif
+#ifdef USE_PPS
+         "   /iu=pps_device   - use PPS device to synchronize display updates to (e.g. /dev/pps0)\r\n"
+#endif
 
          "   /a[=#]           - number of points to calc Adevs over (default=432000)\r\n"
          "                      If 0,  then all adev calculations are disabled.\r\n"
@@ -22774,6 +22780,9 @@ int fs_help;
          "   /ip=#            - set TCP/IP input device address\r\n"
          "   /ir              - set read-only mode for receiver commands\r\n"
          "   /is              - set read-only mode for serial port\r\n"
+#ifdef USE_PPS
+         "   /iu=#            - set PPS device to synchronize display updates to (e.g. /dev/pps0)\r\n"
+#endif
          "   /ix              - set no-pollng mode for receiver data\r\n"
          "   /if[=freq]       - set time interval counter nominal freq (all channels)\r\n"
          "   /ifa[=freq]      - set time interval counter channel A nominal freq\r\n"

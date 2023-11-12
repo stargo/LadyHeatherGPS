@@ -20660,6 +20660,14 @@ user_set_full_screen = 1;  // piss
          ticc_type = TAPR_TICC;
          user_set_ticc_type = TAPR_TICC;
       }
+      #ifdef USE_PPS
+      else if(d == 'u') {  // /iu=pps_device_name
+         if(arg[4] && ((e == '=') || (e == ':'))) {
+            strcpy(pps_device, &arg[4]);
+         }
+         else pps_device[0] = 0;
+      }
+      #endif
       else if(d == 'x') {  // /ix - do not send message poll requests
          no_poll = toggle_option(no_poll, e);
          need_redraw = 4321;
