@@ -20640,7 +20640,7 @@ void process_extra_ports(int why)
    }
 }
 
-int process_pps(int why)
+int process_pps(int ms)
 {
    #ifdef USE_PPS
    static int last_pps = -1;
@@ -20651,7 +20651,7 @@ int process_pps(int why)
        struct timespec pps_timeout;
 
        pps_timeout.tv_sec = 0;
-       pps_timeout.tv_nsec = 0;
+       pps_timeout.tv_nsec = ms * 1000000;
        time_pps_fetch(pps_handle, PPS_TSFMT_TSPEC, &pps_info, &pps_timeout);
        if (last_pps_sequence != pps_info.assert_sequence) {
            if (last_pps_sequence + 1 == pps_info.assert_sequence) {
@@ -20706,7 +20706,12 @@ int process_pps(int why)
            }
            last_pps_sequence = pps_info.assert_sequence;
        }
+   } else
+   #endif
+   if (ms) {
+       Sleep(ms);
    }
+   #ifdef USE_PPS
    if (last_pps == g_seconds) {
        return 1;
    }
@@ -20964,7 +20969,7 @@ reset_kbd_timer();
          else if(rcvr_type == TIDE_RCVR) ;
          else if(com[RCVR_PORT].process_com == 0) refresh_page();
 
-         process_pps(2);
+         process_pps(0);
 process_extra_ports(3);
          break;
       }
@@ -20972,7 +20977,7 @@ process_extra_ports(3);
          reset_com_timer(RCVR_PORT);
       }
 
-      if (process_pps(1)) {
+      if (process_pps(0)) {
           inhibit_refresh = 1;
       }
       get_device_messages(i);  // process any data from the input devices
@@ -21683,7 +21688,7 @@ int i;
       else if(sim_file && (sim_eof == 0)) {  // allow fast simulation file processing... use /sw if throttling or sleep needed
       }
       else if(idle_sleep && (set_system_time == 0)) {  // sleep a while when we are not busy to keep cpu usage down
-         Sleep(idle_sleep);
+         process_pps(idle_sleep);
       }
 
       process_extra_ports(6);  // handle data from extra serial ports
