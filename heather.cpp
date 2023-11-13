@@ -17402,6 +17402,14 @@ int color;
       else if((text_mode == 0) && (zoom_screen == 0)) { 
          line(PLOT_COL,PLOT_ROW+PLOT_HEIGHT-1,  PLOT_COL+PLOT_WIDTH,PLOT_ROW+PLOT_HEIGHT-1, WHITE);
       }
+   } else if((text_mode != 0) || (zoom_screen != 0)) {
+      int px = col * TEXT_WIDTH;
+      int py = row * TEXT_HEIGHT;
+      if((zoom_screen && (zoom_screen != 'P') && (zoom_screen != 'K')) || (py < (((PLOT_ROW/TEXT_HEIGHT)*TEXT_HEIGHT) - (TEXT_HEIGHT*2)))) {
+         if(no_x_margin == 0) px += TEXT_X_MARGIN;
+         if(no_y_margin == 0) py += TEXT_Y_MARGIN;
+      }
+      erase_rectangle(px, py, PLOT_WIDTH-TEXT_Y_MARGIN, TEXT_HEIGHT);
    }
 
    if(0 && rpn_mode && (zoom_screen == 0)) {
