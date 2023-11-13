@@ -16159,7 +16159,7 @@ char c;
       else sprintf(out, "ref%c<%.1f %s>", c, val, plot[id].units);
    }
    else if(id == SAT_PLOT) {
-      sprintf(out, " ");
+      sprintf(out, "Used: %2d/%d", sat_count, vis_count);
    }
    else if(id == TEMP) {
       if((rcvr_type == UCCM_RCVR) && (scpi_type == UCCMP_TYPE)) {
