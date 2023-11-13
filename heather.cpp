@@ -20709,7 +20709,24 @@ int process_pps(int ms)
    } else
    #endif
    if (ms) {
+       #ifdef WINDOWS
        Sleep(ms);
+       #else
+       //same as in check_incoming_data
+       if ((RCVR_PORT >= NUM_COM_PORTS) ||
+           ((rcvr_type == NO_RCVR) && (enable_terminal == 0)) ||
+           ((rcvr_type == TIDE_RCVR) && (enable_terminal == 0)) ||
+           (sim_file) ||
+           (com[RCVR_PORT].com_fd < 0)) {
+          Sleep(ms);
+       } else {
+          struct pollfd pfds[1] = {0};
+
+          pfds[0].fd = com[RCVR_PORT].com_fd;
+          pfds[0].events = POLLIN;
+          poll(pfds, 1, ms);
+       }
+       #endif
    }
    #ifdef USE_PPS
    if (last_pps == g_seconds) {

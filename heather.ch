@@ -427,6 +427,7 @@ EXTERN char *unit_file_name;  // base name of files to write (based upon receive
    #include <netinet/in.h>
    #include <netdb.h> 
    #include <libgen.h>
+   #include <poll.h>
    #ifdef USE_PPS
    #include <sys/timepps.h>
    #endif
