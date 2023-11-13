@@ -20651,8 +20651,13 @@ int process_pps(int ms)
        struct timespec pps_timeout;
 
        pps_timeout.tv_sec = 0;
-       pps_timeout.tv_nsec = ms * 1000000;
+       pps_timeout.tv_nsec = 0;
        time_pps_fetch(pps_handle, PPS_TSFMT_TSPEC, &pps_info, &pps_timeout);
+       if (last_pps_sequence == pps_info.assert_sequence) {
+           pps_timeout.tv_sec = 0;
+           pps_timeout.tv_nsec = ms * 1000000;
+           time_pps_fetch(pps_handle, PPS_TSFMT_TSPEC, &pps_info, &pps_timeout);
+       }
        if (last_pps_sequence != pps_info.assert_sequence) {
            if (last_pps_sequence + 1 == pps_info.assert_sequence) {
                if (((g_hours != 23) ||
