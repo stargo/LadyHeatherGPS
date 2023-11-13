@@ -2808,12 +2808,12 @@ int sats_changed;
          if(last_const[prn] != this_const[prn]) ++sats_changed;
          ++sat_count;
          ++track_count;
-         ++vis_count;
          have_count = 100;
       }
       else if(sat[prn].tracking < 0) {
          ++track_count;
       }
+      ++vis_count;
    }
    if(lte_lite && (have_sawtooth == 0)) sat_count = jackson_sat_count;
 
