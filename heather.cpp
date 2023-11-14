@@ -22165,7 +22165,7 @@ szAppName[0] = 0;
           time_pps_create(pps_fd, &pps_handle);
           time_pps_getparams(pps_handle, &pps_params);
           if ((pps_params.mode & PPS_CAPTUREASSERT) == 0) {
-              fprintf(stderr, "%s cannot currently CAPTUREASSERT\n", "/dev/pps0");
+              fprintf(stderr, "%s cannot currently CAPTUREASSERT\n", pps_device);
               time_pps_destroy(pps_handle);
               pps_handle = -1;
           }
