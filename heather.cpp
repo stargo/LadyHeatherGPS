@@ -20653,7 +20653,20 @@ int process_pps(int ms)
        pps_timeout.tv_sec = 0;
        pps_timeout.tv_nsec = 0;
        time_pps_fetch(pps_handle, PPS_TSFMT_TSPEC, &pps_info, &pps_timeout);
-       if (last_pps_sequence == pps_info.assert_sequence) {
+       if (ms && (last_pps_sequence == pps_info.assert_sequence)) {
+           struct timespec t;
+           long diff;
+
+           clock_gettime(CLOCK_REALTIME, &t);
+           diff = (t.tv_sec - pps_info.assert_timestamp.tv_sec) * 1000;
+           diff += ((t.tv_nsec - pps_info.assert_timestamp.tv_nsec) / 1000000);
+
+           // Only sleep 1ms if we are near an edge so we only add a minimal
+           // delay if we miss the edge between the two calls to time_pps_fetch
+           if (diff > 975) {
+               ms = 1;
+           }
+
            pps_timeout.tv_sec = 0;
            pps_timeout.tv_nsec = ms * 1000000;
            time_pps_fetch(pps_handle, PPS_TSFMT_TSPEC, &pps_info, &pps_timeout);
