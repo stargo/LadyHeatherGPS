@@ -46610,6 +46610,22 @@ char *c, *d, *t, *u;
       else sprintf(out, "COM: none             ");
       if(strlen(out) > 25) strcpy(&out[25-3],"...");   // don't hit 'Power' label
    }
+   #ifdef USE_PPS
+   if (pps_handle != -1 && pps_device[0] != 0x00) {
+      char p[64] = { 0 };
+      int i;
+      for (i = strlen(out) - 1; i > 0; i--) {
+         if (out[i] == ' ') {
+	    out[i] = 0x00;
+	 } else {
+	    break;
+	 }
+      }
+      snprintf(p, sizeof(p)-1, ", %s", basename(pps_device));
+      strcat(out, p);
+      if(strlen(out) > 25) strcpy(&out[25-3],"...");   // don't hit 'Power' label
+   }
+   #endif
    vidstr(VER_ROW+4, VER_COL, WHITE, out);
 }
 
