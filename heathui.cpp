@@ -16353,13 +16353,12 @@ void config_utc_mode(int set_utc_ofs)
       set_gps_mode = 0;
    }
 
-   // here we attempt to estimate the leapsecond count if it is needed and
+   // We make no attempt to estimate the leapsecond count and just assume it is 18 for now
+   // (as the IERS has not inserted leap seconds in a long time) if it is needed and
    // the user or GPS receiver did not specify one. 
 
    if(!user_set_utc_ofs && set_utc_ofs) { 
-      get_clock_time();
-      if(clk_jd < jdate(2025,7,1)) utc_offset = 18;
-      else utc_offset = (int) (39.216 + (double)(clk_year-2061)*0.567);
+      utc_offset = 18;
       have_utc_ofs = (-1);
    }
 }
