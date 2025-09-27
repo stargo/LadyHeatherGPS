@@ -46999,7 +46999,7 @@ color = GREY;  // we no longer do the holdover state
       vidstr(SURVEY_ROW+2+eofs, SURVEY_COL, color, out);
 
       if(rcvr_type == UBX_RCVR)  {
-         sprintf(out, "VAR: %.6gm ", sqrt(ubx_svar)/1000);
+         sprintf(out, "VAR: %.6gm       ", sqrt(ubx_svar)/1000);
          vidstr(SURVEY_ROW+3+eofs, SURVEY_COL, color, out);
       }
    }
