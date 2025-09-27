@@ -26961,6 +26961,7 @@ u32 rsvd;
 
    if(do_survey) survey_progress = (int) ((100 * dur) / do_survey);  // !!!! use obs instead of dur?
    else          survey_progress = 0;
+   if (survey_progress > 100) survey_progress = 100;
    have_progress = 3;
 //sprintf(plot_title, "obs:%d  dur:%d  svar:%d  progress:%d  act:%d  valid:%d", 
 //obs,dur,ubx_svar,survey_progress, active,valid);  // zorky
@@ -46998,7 +46999,7 @@ color = GREY;  // we no longer do the holdover state
       vidstr(SURVEY_ROW+2+eofs, SURVEY_COL, color, out);
 
       if(rcvr_type == UBX_RCVR)  {
-         sprintf(out, "VAR: %-9d", ubx_svar);
+         sprintf(out, "VAR: %.6gm ", sqrt(ubx_svar)/1000);
          vidstr(SURVEY_ROW+3+eofs, SURVEY_COL, color, out);
       }
    }
